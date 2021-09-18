@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -26,7 +25,6 @@ class CountryService {
     }
 
     public function createCountry($data) {
-
         $country = new Country;
         $country->name = $data->input('country_name');
         $country->slug = Str::slug($data->input('country_name'), '-');
@@ -44,6 +42,35 @@ class CountryService {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
+    public function updateC($data) {
+
+        $updated = Country::where('id', $data->c_id)->update([
+            'name' => $data->country_name,
+            'last_modified_by' => Auth::id(),
+            'last_modified' => Carbon::now()
+        ]);
+
+        if($updated) {
+            $u = 'ok';
+            return back()->with(compact('u'));
+        }
+
+        return response()->json([
+            'ok' => false,
+            'message' => "Can't update"
+        ])->setStatusCode(503);
+
+    }
+
+    public function remove($id) {
+        $deleted = Country::where('id', $id)->delete();
+
+        if($deleted) {
+            $c_deleted = 'ok';
+            return back()->with(compact('c_deleted'));
+        }
     }
 
 }

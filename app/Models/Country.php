@@ -11,4 +11,8 @@ class Country extends Model
 
     protected $fillable = ['name', 'slug', 'created_by', 'created', 'last_modified_by', 'last_modified', 'published'];
     public $timestamps = false;
+
+    public function regions() {
+        return $this->hasMany(Region::class, 'country', 'id');
+    }
 }

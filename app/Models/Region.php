@@ -12,6 +12,6 @@ class Region extends Model
     public $timestamps = false;
 
     public function countries() {
-        return $this->belongsToMany(Country::class);
+        return $this->belongsTo(Country::class, 'country');
     }
 }

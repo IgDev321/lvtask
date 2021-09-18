@@ -1,5 +1,6 @@
 .pagination {
     list-style: none;
+    padding: 0;
 }
 .pagination li {
     display: inline-block;
@@ -8,4 +9,18 @@
 
 table tr {
     border: 1px solid black;
+}
+
+.filters {
+    display: inline-block;
+    color: red;
+    border: 1px solid #2d3748;
+    width: 30%;
+}
+
+.sorting {
+    display: inline-block;
+    color: red;
+    border: 1px solid #2d3748;
+    width: 30%;
 }

@@ -36,10 +36,15 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'au
     Route::get('/update/country/{id}', [App\Http\Controllers\HomeController::class, 'updateCountry'])->name('updateCountry');
     Route::get('/update/region/{id}/{country}', [App\Http\Controllers\HomeController::class, 'updateRegion'])->name('updateRegion');
 
-    Route::put('/update/region', [App\Http\Controllers\HomeController::class, 'updateReg'])->name('updateReg');
-    Route::put('/update/country', [App\Http\Controllers\HomeController::class, 'updateC'])->name('updateC');
+    Route::put('/update/region', [App\Http\Controllers\RegionController::class, 'updateReg'])->name('updateReg');
+    Route::put('/update/country', [App\Http\Controllers\CountriesController::class, 'updateC'])->name('updateC');
+
+    Route::delete('/remove/region/{id}', [App\Http\Controllers\RegionController::class, 'destroy'])->name('removeReg');
+    Route::delete('/remove/country/{id}', [App\Http\Controllers\CountriesController::class, 'destroy'])->name('removeC');
 
     Route::get('/all', [App\Http\Controllers\HomeController::class, 'show'])->name('showAll');
+
+    Route::get('/search/{page?}', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
 
 });

@@ -29,9 +29,9 @@
 
     @if(session('created') == 'ok')
        <p style="text-align: center;">
-           <a href="{{ route('dashboard') }}" style="color: red;"> Now you can modify your created data </a>
+           <a href="{{ route('dashboard.showAll') }}" style="color: red;"> Now you can modify your created data or search</a>
            or
-           <a href="{{  }}" style="color: red;"> View all</a>
+           <a href="{{ route('dashboard.') }}" style="color: red;"> Go Back</a>
        </p>
     @endif
 

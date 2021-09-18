@@ -64,7 +64,6 @@ class HomeController extends Controller
 
     public function updateCountry($id) {
         $country = $this->countryService->getCountryById($id);
-
         return view('updateCountry', ['country' => $country]);
     }
 
@@ -72,6 +71,33 @@ class HomeController extends Controller
         $region = $this->regionService->getRegionById($id);
         $countries = $this->countryService->showCountries();
         return view('updateRegion', ['countries' => $countries, 'c' => $country, 'region' => $region]);
+    }
+
+
+    public function search(Request $request) {
+
+        $date = date('Y-m-d', strtotime($request->date_filter));
+        $last_modified = $request->last_modified;
+        $search_name = $request->search_name;
+
+        $result = null;
+        if($date !== '1970-01-01') {
+            $result = $this->regionService->getFiltered($date, null, null);
+        }else if($date !== '1970-01-01' && isset($last_modified) && !isset($search_name)) {
+            $result = $this->regionService->getFiltered($date, $last_modified, null);
+        } else if($date !== '1970-01-01' && isset($last_modified) && isset($search_name)) {
+            $result = $this->regionService->getFiltered($date, $last_modified, $search_name);
+        } else if($date !== '1970-01-01' && isset($search_name)) {
+            $result = $this->regionService->getFiltered($date, null, $search_name);
+        } else if(isset($search_name)) {
+            $result = $this->regionService->getFiltered(null, null, $search_name);
+        } else {
+            return back();
+        }
+
+        $final = paginate($result, 5);
+
+        return view('search', ['regions' => $final]);
     }
 
 }

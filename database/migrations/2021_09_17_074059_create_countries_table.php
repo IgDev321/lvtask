@@ -20,7 +20,7 @@ class CreateCountriesTable extends Migration
             $table->integer('created_by');
             $table->timestamp('created')->default(now());
             $table->integer('last_modified_by')->nullable();
-            $table->integer('last_modified')->nullable();
+            $table->timestamp('last_modified')->nullable();
             $table->boolean('published')->default(1);
         });
     }
